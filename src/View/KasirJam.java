@@ -14,7 +14,12 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import Controller.KendaliBarang;
 import Model.modelKasir;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
 /**
  *
@@ -36,7 +41,7 @@ public class KasirJam extends javax.swing.JFrame {
         mdl.AutoKodeKategori(this);
         setLebarKolom();
         mdl.TampilComboMerkJam(this);
-       
+         Tampil_Jam();
     }
     
      public void setColumnWidth(int kolom) {
@@ -72,6 +77,36 @@ public class KasirJam extends javax.swing.JFrame {
         this.setVisible(false);
         new KasirJam().setVisible(true);
     }
+    
+      public void Tampil_Jam(){
+        ActionListener taskPerformer = new ActionListener() {
+ 
+        @Override
+            public void actionPerformed(ActionEvent evt) {
+       java.util.Date tglsekarang = new java.util.Date();
+    SimpleDateFormat smpdtfmt = new SimpleDateFormat("dd MMMMMMMMM yyyy", Locale.getDefault());
+    String tanggal = smpdtfmt.format(tglsekarang);
+            String nol_jam = "", nol_menit = "",nol_detik = "";
+ 
+            java.util.Date dateTime = new java.util.Date();
+            int nilai_jam = dateTime.getHours();
+            int nilai_menit = dateTime.getMinutes();
+            int nilai_detik = dateTime.getSeconds();
+ 
+            if(nilai_jam <= 9) nol_jam= "0";
+            if(nilai_menit <= 9) nol_menit= "0";
+            if(nilai_detik <= 9) nol_detik= "0";
+ 
+            String jam = nol_jam + Integer.toString(nilai_jam);
+            String menit = nol_menit + Integer.toString(nilai_menit);
+            String detik = nol_detik + Integer.toString(nilai_detik);
+ 
+         
+            txtTanggalWaktu.setText(tanggal+" "+jam+":"+menit+":"+detik+"");
+            }
+        };
+        new Timer(1000, taskPerformer).start();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,6 +114,7 @@ public class KasirJam extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     modelKasir mdl = new modelKasir();
+    
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -124,7 +160,7 @@ public class KasirJam extends javax.swing.JFrame {
         txtTambahan = new javax.swing.JTextField();
         txtCariData = new javax.swing.JTextField();
         btnCari = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        txtTanggalWaktu = new javax.swing.JTextField();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
 
@@ -397,7 +433,7 @@ public class KasirJam extends javax.swing.JFrame {
                         .addGap(55, 55, 55)
                         .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(txtTanggalWaktu, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -432,17 +468,15 @@ public class KasirJam extends javax.swing.JFrame {
                     .addComponent(lblHargaDiameter)
                     .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbBaterai)
-                            .addComponent(jLabel14))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(cbBox)
-                            .addComponent(jLabel15)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbBaterai)
+                    .addComponent(jLabel14))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbBox)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTanggalWaktu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTambahan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -521,7 +555,7 @@ public class KasirJam extends javax.swing.JFrame {
         try {
 //          
             mdl.Hitung(this);
-            
+           
         } catch (SQLException e) {
         }
     }//GEN-LAST:event_btnHitungActionPerformed
@@ -624,7 +658,6 @@ public class KasirJam extends javax.swing.JFrame {
     public javax.swing.JComboBox<String> cmbMerkJam;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -653,6 +686,7 @@ public class KasirJam extends javax.swing.JFrame {
     public javax.swing.JTextField txtNmCustomer;
     public javax.swing.JTextField txtPembayaran;
     public javax.swing.JTextField txtTambahan;
+    public javax.swing.JTextField txtTanggalWaktu;
     public javax.swing.JTextField txtTransaksi;
     // End of variables declaration//GEN-END:variables
 }
