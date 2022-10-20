@@ -20,18 +20,18 @@ import javax.swing.table.DefaultTableModel;
  * @author lenovot470s
  */
 public class modelKasir implements KendaliKasir{
-       int harga, hargaDiameter, total, bayar, stok, jumlahBarang;
-       String jenis, kodeJam;
+       int harga, hargaDiameter, total, bayar, stok, jumlahBarang,dataHargaAksesoris;
+       String jenis, kodeJam, dataNamaAksesoris;
        
        
     @Override
     public void Simpan(KasirJam ksr) throws SQLException {
-      
+       dataNamaAksesoris = DataAksesoris(ksr)[0];
     }
 
     @Override
     public void Ubah(KasirJam ksr) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        dataNamaAksesoris = DataAksesoris(ksr)[0];
     }
 
     @Override
@@ -120,7 +120,8 @@ public class modelKasir implements KendaliKasir{
       }
       else{
         int hargaJam = harga;
-        int hasilHargaAksesoris = DataAksesoris(ksr) * jumlahBarang;
+        dataHargaAksesoris =Integer.valueOf(DataAksesoris(ksr)[1]) ;
+        int hasilHargaAksesoris = dataHargaAksesoris * jumlahBarang;
         int hasiHargaDiameter = TampilHargaDiamterJam(ksr) * jumlahBarang;
         int hasilHargaJam = hargaJam*jumlahBarang;
         total = hasilHargaJam + hasiHargaDiameter + hasilHargaAksesoris;
@@ -183,7 +184,7 @@ public class modelKasir implements KendaliKasir{
         return hargaDiameter;
    }
     
-   public int DataAksesoris(KasirJam ksr) throws SQLException{
+   public String[] DataAksesoris(KasirJam ksr) throws SQLException{
         String aksesoris;
        int hargaAksesoris = 0;
        aksesoris ="";
@@ -205,7 +206,8 @@ public class modelKasir implements KendaliKasir{
            aksesoris = aksesoris.substring(0, aksesoris.length()-2) + ".";
              ksr.txtTambahan.setText(aksesoris);
         } 
-        return hargaAksesoris;
+        String arrayAksesoris []={aksesoris, String.valueOf(hargaAksesoris)};
+        return arrayAksesoris;
    }
    
    public void UpdateDataStokJam(KasirJam ksr) throws SQLException{
