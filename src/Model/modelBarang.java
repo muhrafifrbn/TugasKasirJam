@@ -127,7 +127,7 @@ public class modelBarang implements KendaliBarang{
                 Object[] ob = new Object[8];
                 ob[0] = no++;
                 ob[1] = res.getString(1);
-                ob[2] = res.getString(2);
+                ob[2] = res.getString(1);
                 ob[3] = res.getString(3);
                 ob[4] = res.getString(4);
                 ob[5] = res.getString(5);
